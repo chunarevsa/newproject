@@ -1,7 +1,8 @@
 package com.example.newproject.controller;
 
 import com.example.newproject.entity.UserEntity;
-import com.example.newproject.repository.UserRepo;
+import com.example.newproject.exception.UserAlreadyExistException;
+import com.example.newproject.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
 	@Autowired
-	private UserRepo userRepo;
+	private UserService userService;
 
 	@PostMapping
 	public ResponseEntity registration(@RequestBody UserEntity user) {
 		try {
-			if (userRepo.findByUsername(user.getUsername()) != null) {
-				return ResponseEntity.badRequest().body("Пользователеь с таким именем уже существует");
-			}
-			userRepo.save(user);
+			userService.registration(user);
 			return ResponseEntity.ok().body("user saved");
-		} catch (Exception e) {
+		} catch (UserAlreadyExistException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		catch (Exception e) {
 			return ResponseEntity.badRequest().body("Ошибка");
 		}
 	}
