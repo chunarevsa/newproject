@@ -1,10 +1,13 @@
 package com.example.newproject.entity;
 
-import javax.annotation.Generated;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class UserEntity {
@@ -14,6 +17,9 @@ public class UserEntity {
 	private Long id;
 	private String username;
 	private String password;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private List <TodoEntity> todoList;
 
 	public UserEntity() {
 	}
@@ -41,5 +47,15 @@ public class UserEntity {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
+	public List<TodoEntity> getTodoList() {
+		return this.todoList;
+	}
+
+	public void setTodoList(List<TodoEntity> todoList) {
+		this.todoList = todoList;
+	}
+
 
 }
