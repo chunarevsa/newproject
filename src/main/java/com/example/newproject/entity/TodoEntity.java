@@ -6,8 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table (name = "todo")
 public class TodoEntity {
 	
 	@Id
@@ -15,6 +17,7 @@ public class TodoEntity {
 	private Long id;
 	private String title;
 	private Boolean completed;
+	private String discription;
 
 	@ManyToOne 
 	@JoinColumn (name = "user_id")
@@ -61,5 +64,13 @@ public class TodoEntity {
 		this.user = user;
 	}
 
+
+	public String getDiscription() {
+		return this.discription;
+	}
+
+	public void setDiscription(String discription) {
+		this.discription = discription;
+	}
 
 }
