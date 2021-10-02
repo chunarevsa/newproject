@@ -16,7 +16,6 @@ public class TodoModel {
 		
 	}
 
-
 	public TodoModel() {
 	}
 
